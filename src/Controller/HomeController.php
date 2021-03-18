@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Repository\DeveloperRepository;
 use App\Services\Debugator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,10 +10,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController
 {
     private Debugator $debugator;
+    private string $slackToken;
 
-    public function __construct(Debugator $debugator)
+    public function __construct(Debugator $debugator, string $slackToken)
     {
         $this->debugator = $debugator;
+        $this->slackToken = $slackToken;
     }
 
     /**
@@ -30,6 +31,10 @@ class HomeController
      */
     public function execCommand(Request $request): Response
     {
+        if ($request->get('token') !== $this->slackToken) {
+            return new Response(json_encode('Unauthorized : bad slack toekn'), Response::HTTP_UNAUTHORIZED);
+        }
+
         $arg = explode(' ', $request->get('text'));
         $response = $this->debugator->{$arg[0]}(...$arg);
 
