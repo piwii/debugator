@@ -19,23 +19,19 @@ class HomeController
     }
 
     /**
-     * @route("/help", name="help")
-     */
-    public function help(): Response
-    {
-        return new Response('help');
-    }
-
-    /**
      * @route("/", methods={"GET","POST"}, name="command")
      */
     public function execCommand(Request $request): Response
     {
         if ($request->get('token') !== $this->slackToken) {
-            return new Response(json_encode('Unauthorized : bad slack toekn'), Response::HTTP_UNAUTHORIZED);
+            return new Response(json_encode('Unauthorized : bad slack token'), Response::HTTP_UNAUTHORIZED);
         }
 
         $arg = explode(' ', $request->get('text'));
+        if (!count($arg)) {
+            $arg[0] = 'help';
+        }
+
         $response = $this->debugator->{$arg[0]}(...$arg);
 
         return new Response(json_encode([
