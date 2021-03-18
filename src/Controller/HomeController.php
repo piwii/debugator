@@ -29,8 +29,7 @@ class HomeController
 
         $arg = explode(' ', $request->get('text'));
 
-        dd($arg);
-        if (!count($arg)) {
+        if (!in_array($arg[0], $this->debugator->getAvaliableCommand())) {
             $arg[0] = 'help';
         }
 

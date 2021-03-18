@@ -17,6 +17,15 @@ class Debugator
         $this->cache = $cache;
     }
 
+    public function getAvaliableCommand(): array
+    {
+        return [
+            'help',
+            'all',
+            'list'
+        ];
+    }
+
     public function help(): string
     {
         return 'help';
