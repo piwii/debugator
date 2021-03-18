@@ -28,6 +28,8 @@ class HomeController
         }
 
         $arg = explode(' ', $request->get('text'));
+
+        dd($arg);
         if (!count($arg)) {
             $arg[0] = 'help';
         }
