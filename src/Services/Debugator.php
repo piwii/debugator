@@ -66,9 +66,9 @@ class Debugator
             $date = new \DateTime();
             $date->modify('next monday');
 
-            $response = 'Randomisation de la liste :\n';
+            $response = "Liste des developeurs d'astreinte chaque semaine :\n";
             for ($i = 0; $i < count($frontDeveloper); $i++) {
-                $response .= sprintf('* [%s] *%s* avec *%s*\n', $date->format('Y-m-d'), $frontDeveloper[$i]->getName(), $backDeveloper[$i % count($backDeveloper)]->getName());
+                $response .= sprintf("* [%s] *%s* avec *%s*\n", $date->format('Y-m-d'), $frontDeveloper[$i]->getName(), $backDeveloper[$i % count($backDeveloper)]->getName());
                 $date->modify('+1 week');
             }
 
