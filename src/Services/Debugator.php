@@ -72,7 +72,7 @@ class Debugator
         }
 
         return $this->cache->get('random', function (ItemInterface $item) {
-            $item->expiresAfter(3600);
+            $item->expiresAfter(3600 * 24 * 7);
 
             $frontDeveloper = $this->developerRepository->getFrontDeveloper();
             shuffle($frontDeveloper);
