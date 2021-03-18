@@ -10,14 +10,16 @@ class Debugator
 {
     private CacheInterface $cache;
     private DeveloperRepository $developerRepository;
+    private string $password;
 
-    public function __construct(DeveloperRepository $developerRepository, CacheInterface $cache)
+    public function __construct(DeveloperRepository $developerRepository, CacheInterface $cache, string $password)
     {
         $this->developerRepository = $developerRepository;
         $this->cache = $cache;
+        $this->password = $password;
     }
 
-    public function getAvaliableCommand(): array
+    public function getAvailableCommand(): array
     {
         return [
             'help',
@@ -28,7 +30,12 @@ class Debugator
 
     public function help(): string
     {
-        return 'help';
+        $response = "*List of available command* :\n";
+        $response .= "* *all* : affiche tous les developeurs\n";
+        $response .= "* *list* : affiche les developeurs d'astreinte chaque semaine\n";
+        $response .= "* *help* : affiche cet aide :-)\n";
+
+        return $response;
     }
 
     public function all(): string
@@ -43,7 +50,7 @@ class Debugator
 
     public function list(string $cmd, ?string $password = ''): string
     {
-        if ($password === 'zuSUs3qa91000') {
+        if ($password === $this->password) {
             $this->cache->delete('random');
         }
 
