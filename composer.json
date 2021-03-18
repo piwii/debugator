@@ -16,6 +16,7 @@
         "ext-json": "*"
     },
     "require-dev": {
+        "symfony/var-dumper": "5.2.*"
     },
     "config": {
         "optimize-autoloader": true,
