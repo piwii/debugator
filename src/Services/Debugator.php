@@ -24,15 +24,18 @@ class Debugator
         return [
             'help',
             'all',
+            'current',
             'list'
         ];
     }
 
     public function help(): string
     {
-        $response = "*List of available command* :\n";
+        $response = "*Permet de designer les developpeurs en charge de la correction des bugs* :\n";
+        $response .= "List of available command :\n";
         $response .= "* *all* : affiche tous les developeurs\n";
         $response .= "* *list* : affiche les developeurs d'astreinte chaque semaine\n";
+        $response .= "* *current* : affiche le developeur en charge de la correction cette semaine\n";
         $response .= "* *help* : affiche cet aide :-)\n";
 
         return $response;
@@ -46,6 +49,20 @@ class Debugator
         }
 
         return $response;
+    }
+
+    public function current(): string
+    {
+        $date = new \DateTime();
+        $date->modify('last monday');
+
+        foreach (explode("\n", $this->list('list')) as $line) {
+            if (strstr($line, $date->format('Y-m-d'))) {
+                return substr($line, 2);
+            }
+        }
+
+        return 'Personne n\'est assigné cette semaine';
     }
 
     public function list(string $cmd, ?string $password = ''): string
