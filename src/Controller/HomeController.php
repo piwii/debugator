@@ -26,7 +26,7 @@ class HomeController
     }
 
     /**
-     * @route("/", methods="POST", name="command")
+     * @route("/", methods={"GET","POST"}, name="command")
      */
     public function execCommand(Request $request): Response
     {
