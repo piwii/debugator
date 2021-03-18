@@ -40,9 +40,9 @@ class Debugator
 
     public function all(): string
     {
-        $response = 'Liste des developpeurs\n';
+        $response = "Liste des developpeurs\n";
         foreach ($this->developerRepository->getAll() as $developer) {
-            $response .= sprintf('* %s [%s]\n', $developer->getName(), $developer->getType());
+            $response .= sprintf("* %s [%s]\n", $developer->getName(), $developer->getType());
         }
 
         return $response;
