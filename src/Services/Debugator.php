@@ -54,7 +54,7 @@ class Debugator
     public function current(): string
     {
         $date = new \DateTime();
-        $date->modify('last monday');
+        $date->modify('this monday');
 
         foreach (explode("\n", $this->list('list')) as $line) {
             if (strstr($line, $date->format('Y-m-d'))) {
@@ -72,7 +72,6 @@ class Debugator
         }
 
         return $this->cache->get('random', function (ItemInterface $item) {
-            $item->expiresAfter(3600 * 24 * 7);
 
             $frontDeveloper = $this->developerRepository->getFrontDeveloper();
             shuffle($frontDeveloper);
@@ -80,8 +79,9 @@ class Debugator
             $backDeveloper = $this->developerRepository->getBackDeveloper();
             shuffle($backDeveloper);
 
+            $item->expiresAfter(3600 * 24 * 7 * count($frontDeveloper));
             $date = new \DateTime();
-            $date->modify('next monday');
+            $date->modify('this monday');
 
             $response = "Liste des developeurs d'astreinte chaque semaine :\n";
             for ($i = 0; $i < count($frontDeveloper); $i++) {
