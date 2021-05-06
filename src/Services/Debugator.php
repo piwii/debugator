@@ -84,8 +84,12 @@ class Debugator
             $date->modify('this monday');
 
             $response = "Liste des developeurs d'astreinte chaque semaine :\n";
-            for ($i = 0; $i < count($frontDeveloper); $i++) {
-                $response .= sprintf("* [%s] *%s* avec *%s*\n", $date->format('Y-m-d'), $frontDeveloper[$i]->getName(), $backDeveloper[$i % count($backDeveloper)]->getName());
+            for ($i = 0, $j = 0; $i < count($frontDeveloper); $i++) {
+                if ($i % 2) {
+                    $response .= sprintf("* [%s] *%s* avec *%s*\n", $date->format('Y-m-d'), $frontDeveloper[$i]->getName(), $backDeveloper[$j++ % count($backDeveloper)]->getName());
+                } else {
+                    $response .= sprintf("* [%s] *%s*\n", $date->format('Y-m-d'), $frontDeveloper[$i]->getName());
+                }
                 $date->modify('+1 week');
             }
 
